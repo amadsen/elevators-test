@@ -1,0 +1,17 @@
+{
+  "name": "elevators-test",
+  "version": "1.0.0",
+  "description": "\"An elevator simulator\"",
+  "main": "index.js",
+  "bin":{
+    "elevators": "./cli/elevators.js"
+  },
+  "scripts": {
+    "test": "tape tests/*-test.js"
+  },
+  "author": "Aaron Madsen <amadsen@codifiant.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "tape": "^4.6.2"
+  }
+}
