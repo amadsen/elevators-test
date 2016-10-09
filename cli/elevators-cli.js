@@ -32,19 +32,49 @@ var defaultConfig = {
 var elevatorSys = require('../'),
   cfg = extend({}, defaultConfig, yargs.argv);
 
+elevatorSys.on('error', function (err){
+  console.error(err);
+});
+
+elevatorSys.on('request', function (data){
+  console.log('Elevator requested on floor', data.fromFloor);
+});
+
+elevatorSys.on('elevator-moving', function (data){
+  console.log( (data.occupied? 'O':'Uno')+'ccupied', 'elevator', data.elevator.id, 'moving from', data.srcFloor, 'to', data.destFloor);
+});
+
+elevatorSys.on('elevator-at-floor', function (data){
+  console.log('Elevator', data.elevator.id, ((data.floor === data.destFloor)? 'at':'moving past'), data.floor);
+});
+
+
 var replCommands = {
 
   // Call - request elevator to floor, (optional: support request to go up or down)
   call: function callAnElevator(cmd, context, filename, cb){
+    // cmd[0] is always 'call'
+    var fromFloor = cmd[1],
+      direction = cmd[2];
 
+    elevatorSys.requestElevator({
+      fromFloor: fromFloor,
+      direction: direction
+    }, function(){
+      // maybe we want something to happen when the request is fullfilled, like
+      // write some information to the console indicating that the elevator
+      // arrived.
+    });
+
+    cb();
   },
 
   // elevator: Open - open elevator (for either loading or unloading) - elevator
   // does this on its own at the proper floor, no command needed. However, this
   // could be used to simulate an "open door" button on the inside of the elevator.
-  open: function openElevator(cmd, context, filename, cb){
-
-  },
+  // open: function openElevator(cmd, context, filename, cb){
+  //
+  // },
 
   // elevator: GoTo - request elevator take passenger to floor. Marks the elevator
   // as occupied until the floor is reached. This can only be done if you have an
@@ -58,8 +88,10 @@ var replCommands = {
     // repl does a poor job of mapping to the state of an elevator system, so
     // we specify the floor we are on, the elevator we are making the request of,
     // and the target floor.
+
+    // cmd[0] is always 'goToFloor'
     var elevatorId = cmd[1],
-      startFloor = cmd[2],
+      srcFloor = cmd[2],
       destFloor = cmd[3];
   }
 };
