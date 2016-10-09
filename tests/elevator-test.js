@@ -90,3 +90,23 @@ test('Elevator request gets occupied elevator that is passing its floor anyway',
   // Init...
   t.end();
 });
+
+test('Elevator request gets closest unoccupied elevator', function (t) {
+  // Init...
+  t.end();
+});
+
+test('Elevator should track number of trips', function (t) {
+  // Init...
+  t.end();
+});
+
+test('Elevator should track number of floors it has passed', function (t) {
+  // Init...
+  t.end();
+});
+
+test('Elevator should go out of service after 100 trips since last maintenance', function (t) {
+  // Init...
+  t.end();
+});

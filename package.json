@@ -4,7 +4,7 @@
   "description": "\"An elevator simulator\"",
   "main": "index.js",
   "bin":{
-    "elevators": "./cli/elevators.js"
+    "elevators": "./cli/elevators-cli.js"
   },
   "scripts": {
     "test": "tape tests/*-test.js"
